@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tips on lee Blog</title>
+    <link>http://127.0.0.1/tags/tips/</link>
+    <description>Recent content in Tips on lee Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 13 Jul 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://127.0.0.1/tags/tips/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Journals</title>
+      <link>http://127.0.0.1/post/2018-07-13/</link>
+      <pubDate>Fri, 13 Jul 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://127.0.0.1/post/2018-07-13/</guid>
+      <description>fourth day 早上的linux学习 java纠错 +-java.lang.Throwable | +-java.lang.Error | +-java.lang.AssertionError Variables in the enclosing method are only accessible when they are marked as final docker实际操作（跑mysql） docker pull registry.saas.hand-china.com/hmap/mysql:latest 拉取mysql镜像。 docker images</description>
+    </item>
+    
+  </channel>
+</rss>

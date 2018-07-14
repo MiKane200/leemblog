@@ -1,0 +1,1 @@
+docker build -t leemblog:1.0.0 .
