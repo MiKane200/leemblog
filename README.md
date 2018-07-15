@@ -13,6 +13,8 @@ There are some steps for you to run the blog site:
 4. Run `sh run.sh`.
 5. Open you browser and type http://localhost:1313/ or your machine ip.such as http://192.168.99.100:1313/. 
 how to find my IP? [^!ClickHere]
+6. enter username'lee'and password'c7nc7n'.
+
 
 ##### tips:
 * you may need to restart or stop this blog,try `sh restart.sh` or `sh stop .sh`.

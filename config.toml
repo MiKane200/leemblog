@@ -1,4 +1,4 @@
-baseurl = "http://localhost:1313/"
+baseurl = "http://192.168.99.100:1313/"
 title = "lee Blog"
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
