@@ -2,7 +2,7 @@
 
 COPY . /app
 WORKDIR /app
-RUN hugo
+#RUN hugo
 
 FROM registry.saas.hand-china.com/tools/nginx:latest
 COPY auto_devops/default.conf /etc/nginx/conf.d/default.conf

@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Cryptocurrency on lee Blog</title>
-    <link>http://127.0.0.1/tags/cryptocurrency/</link>
+    <link>http://localhost:1313/tags/cryptocurrency/</link>
     <description>Recent content in Cryptocurrency on lee Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 11 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://127.0.0.1/tags/cryptocurrency/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://localhost:1313/tags/cryptocurrency/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Journals</title>
-      <link>http://127.0.0.1/post/2018-07-11/</link>
+      <link>http://localhost:1313/post/2018-07-11/</link>
       <pubDate>Wed, 11 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://127.0.0.1/post/2018-07-11/</guid>
+      <guid>http://localhost:1313/post/2018-07-11/</guid>
       <description>second day 早上的git workflow学习 集中工作流 像Subversion一样，集中式工作流以中央仓库作为项目所有修改的单点实体。相比SVN缺省的</description>
     </item>
     
     <item>
       <title>Journals</title>
-      <link>http://127.0.0.1/post/2018-07-10/</link>
+      <link>http://localhost:1313/post/2018-07-10/</link>
       <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://127.0.0.1/post/2018-07-10/</guid>
+      <guid>http://localhost:1313/post/2018-07-10/</guid>
       <description>Frist day git学习 github : 父子模块 git status 这个命令可以让我们时刻掌握仓库当前的状态，上⾯的命令告诉我们，`readme.txt`被修改过了，但还没有准备</description>
     </item>
     

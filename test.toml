@@ -1,4 +1,4 @@
-baseurl = "http://localhost:1313/"
+baseurl = "http://127.0.0.1:1313/"
 title = "lee Blog"
 theme = "hugo-theme-cleanwhite"
 languageCode = "en-us"
@@ -59,7 +59,7 @@ home = ["HTML", "RSS", "Algolia"]
   
   [[params.friend_link]]
   title = "Lee的博客"
-  href =  "http://localhost:1313/"
+  href =  "http://192.168.99.100:1313/"
 
   [[params.bookmark_link]]
   title =  "Martin Fowler"

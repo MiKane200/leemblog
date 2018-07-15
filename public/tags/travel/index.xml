@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Travel on lee Blog</title>
-    <link>http://127.0.0.1/tags/travel/</link>
+    <link>http://localhost:1313/tags/travel/</link>
     <description>Recent content in Travel on lee Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 12 Jul 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://127.0.0.1/tags/travel/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://localhost:1313/tags/travel/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Journals</title>
-      <link>http://127.0.0.1/post/2018-07-12/</link>
+      <link>http://localhost:1313/post/2018-07-12/</link>
       <pubDate>Thu, 12 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://127.0.0.1/post/2018-07-12/</guid>
+      <guid>http://localhost:1313/post/2018-07-12/</guid>
       <description>third day 早上的linux学习 重定向和管道 重定向 是用来定向命令的输出到一个文件，或把一个文件发送作为到一个命令的 输入。 管道 是用来将命令的输出转发到</description>
     </item>
     

@@ -1,1 +1,1 @@
-docker run --name=leemblog -d -p 1313:80 -e HUGO_URL=http://$(docker-machine ip $(docker-machine active)) leemblog:1.0.0
+docker run --name=leemblog -d -p 1313:1313 leemblog:1.0.0
