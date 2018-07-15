@@ -1,6 +1,7 @@
 # leemblog
 
 This is a blog site base on hugo server.
+
 To run this blog,u need to have installed install docker and have access to a Linux or MacOSX system (case-sensitive filesystem required).
 
 There are some steps for you to run the blog site:
@@ -12,6 +13,8 @@ There are some steps for you to run the blog site:
 5. Open you browser and type http://localhost:1313/ or your machine ip.such as http://192.168.99.100:1313/. 
 how to find my IP? [^!ClickHere]
 
+##### tips:
+* you may need to rerun or stop this blog,try `sh rerun.sh` or `sh stop .sh`.
 [^!ClickHere]: After enter your docker,running `docker-machine env` + your manchine name,you will find DOCKER_HOST and you will get your IP address.
 
 
