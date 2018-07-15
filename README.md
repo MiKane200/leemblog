@@ -6,7 +6,8 @@ To run this blog,u need to have installed install docker and have access to a Li
 
 There are some steps for you to run the blog site:
 (before you run this blog site,you have to ensure your machine's 1313 port is not occupied).
-1. Download files from https://github.com/MiKane200/leemblog.git or `git clone git@github.com:MiKane200/leemblog.git` by git.
+1. Download files from https://github.com/MiKane200/leemblog.git or `git clone -- recursive git@github.com:MiKane200/leemblog.git` by git.
+    tips：If you are not sure the themes are downloaded  completely,try `git submodule update --init --recursive`.
 2. open your docker.
 3. Run `sh build.sh`.
 4. Run `sh run.sh`.
@@ -14,7 +15,7 @@ There are some steps for you to run the blog site:
 how to find my IP? [^!ClickHere]
 
 ##### tips:
-* you may need to rerun or stop this blog,try `sh rerun.sh` or `sh stop .sh`.
+* you may need to restart or stop this blog,try `sh restart.sh` or `sh stop .sh`.
 [^!ClickHere]: After enter your docker,running `docker-machine env` + your manchine name,you will find DOCKER_HOST and you will get your IP address.
 
 
