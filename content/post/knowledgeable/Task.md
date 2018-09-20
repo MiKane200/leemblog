@@ -184,13 +184,6 @@ bug参数:
 3. 取出来的cycleId对应
 
 
-
-搞清楚choerodon的大架构：
-1. 总体架构
-2. 消息机制
-3. 数据库相关
-4. 测试相关
-
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 
@@ -351,3 +344,15 @@ $ git config --global user.email johndoe@example.com
                 </if>
             </foreach>
         </where>
+
+
+
+        
+搞清楚choerodon的大架构：
+1. 总体架构
+2. 消息机制
+3. 数据库相关
+4. 测试相关
+
+接下来看的额外要点：
+1. IO框架及其里面要使用的一些常用的方法
