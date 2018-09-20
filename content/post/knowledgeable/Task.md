@@ -169,139 +169,185 @@ POST
 任务：
 1. 写一个批量根据issueId查询versionNumber的方法（改进算法）
 
-{
 
+bug参数:
+1. /v1/projects/{project_id}/cycle PUT
+
+
+{
+"assignedTo":1663,
+"cycleId":927,
+"lastUpdatedBy":8956
 }
+1. cycle_name 查出来，cycleCaseDTO中添加name属性
+2. 手动分页
+3. 取出来的cycleId对应
 
 
 
+搞清楚choerodon的大架构：
+1. 总体架构
+2. 消息机制
+3. 数据库相关
+4. 测试相关
+
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
 
 
+    @Override
+    public Page<TestCycleCaseDTO> queryByCycleAndFolder(TestCycleCaseDTO dto, PageRequest pageRequest, Long projectId) {
+        //所有的阶段的所有case
+        List<TestCycleCaseDTO> allDTOS = new ArrayList<>();
+        //elements总数
+        Long total = 0L;
 
-        Class issueComponentDetailDTOClass = issueComponentDetailDTO.getClass();
-        Field[] fields = issueComponentDetailDTOClass.getDeclaredFields();
-        BeanUtils.copyProperties(issueComponentDetailDTO,this);
-        try {
-            for (int i = 0; i < fields.length; i++) {
-                Field f = fields[i];
-                f.setAccessible(true);
-                Field thisField = this.getClass().getSuperclass().getDeclaredField(f.getName());// 获取属性
-                thisField.setAccessible(true);
-                thisField.set(this, f.get(issueComponentDetailDTO));// 赋值
-            }
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            
-        }
-    }
+        TestCycleDTO queryTestCycleDTO = new TestCycleDTO();
+        queryTestCycleDTO.setCycleId(dto.getCycleId());
+        //找到所有的子阶段
+        List<TestCycleE> testCycleES = iTestCycleService.queryChildCycle(ConvertHelper.convert(queryTestCycleDTO, TestCycleE.class));
+        //装配值进DTO中
+        List<TestCycleCaseDTO> testCycleCaseDTOS = new ArrayList<>();
+        testCycleCaseDTOS.add(dto);
+        testCycleES.forEach(v -> {
+                    TestCycleCaseDTO tempDTO = new TestCycleCaseDTO();
+                    tempDTO.setAssignedTo(dto.getAssignedTo());
+                    tempDTO.setLastUpdatedBy(dto.getLastUpdatedBy());
+                    tempDTO.setCycleId(v.getCycleId());
+                    tempDTO.setCycleName(v.getCycleName());
+                    testCycleCaseDTOS.add(tempDTO);
+                }
+        );
 
-{
+        //分页数据
+        int lowPage = pageRequest.getPage() * pageRequest.getSize();
+        int highPage = lowPage + pageRequest.getSize();
 
-    {
-      "issueId": 9476,
-      "typeCode": "issue_test",
-      "summary": "sdd",
-      "statusId": null,
-      "priorityCode": null,
-      "assigneeId": null,
-      "assigneeName": null,
-      "assigneeImageUrl": null,
-      "projectId": 144,
-      "priorityName": null,
-      "statusCode": "todo",
-      "statusName": null,
-      "issueNum": null,
-      "reporterId": null,
-      "reporterName": null,
-      "reporterImageUrl": null,
-      "lastUpdateDate": null,
-      "creationDate": null,
-      "epicName": null,
-      "epicColor": null,
-      "statusColor": null,
-      "versionIssueRelDTOList": null,
-      "labelIssueRelDTOList": [],
-      "componentIssueRelDTOList": [],
-      "objectVersionNumber": 2
-    },
-    {
-      "issueId": 9476,
-      "typeCode": "issue_test",
-      "summary": "sdd",
-      "statusId": 640,
-      "priorityCode": "medium",
-      "assigneeId": null,
-      "assigneeName": null,
-      "assigneeImageUrl": null,
-      "projectId": 144,
-      "priorityName": "中",
-      "statusCode": "todo",
-      "statusName": "待处理",
-      "issueNum": "test-manager-1164",
-      "reporterId": 11943,
-      "reporterName": "20645李宗蔚",
-      "reporterImageUrl": null,
-      "lastUpdateDate": "2018-09-05 16:49:56",
-      "creationDate": "2018-09-05 16:49:56",
-      "epicName": null,
-      "epicColor": null,
-      "statusColor": "#FFB100",
-      "versionIssueRelDTOList": [
-        {
-          "versionId": 167,
-          "issueId": 9476,
-          "name": "0.1.0",
-          "projectId": 144,
-          "relationType": "fix"
-        },
-        {
-          "versionId": 170,
-          "issueId": 9476,
-          "name": "0.4.0",
-          "projectId": 144,
-          "relationType": "fix"
-        },
-        {
-          "versionId": 171,
-          "issueId": 9476,
-          "name": "0.5.0",
-          "projectId": 144,
-          "relationType": "fix"
-        }
-      ],
-      "labelIssueRelDTOList": [],
-      "componentIssueRelDTOList": [],
-      "objectVersionNumber": 2
-    }
-
-           //构造一些必要的数据传给listIssueWithoutSubDetail方法
-        //构造SearchDTO
-//        SearchDTO needSearchDTO = new SearchDTO();
-//        Map needArgs = new HashMap();
-//        needArgs.put("issueIds", issueIds);
-//        needSearchDTO.setOtherArgs(needArgs);
-//        //构造分页参数
-//        PageRequest needPageRequest = new PageRequest();
-//        needPageRequest.setPage(0);
-//        needPageRequest.setSize(9999999);
-//        needPageRequest.setSort(new Sort(Sort.Direction.ASC, "issueId"));
-        List<IssueComponentDetailFolderRelDTO> issueComponentDetailFolderRelDTOS = new ArrayList<>();
-//        List<IssueComponentDetailDTO> issueComponentDetailDTOS = testCaseService.listIssueWithoutSubDetail(projectId, needSearchDTO, needPageRequest).getBody().stream().collect(Collectors.toList());
-        Map<Long, IssueInfosDTO> map = testCaseService.getIssueInfoMap(projectId, issueIds, true);
-//        for (IssueComponentDetailDTO issueComponentDetailDTO : issueComponentDetailDTOS) {
-        for (TestIssueFolderRelDTO resultRelDTO : resultRelDTOS) {
-            if (resultRelDTO != null) {
-                //构造方法中设置不了ObjectVersionNumber的值--待解决
-                IssueComponentDetailFolderRelDTO issueComponentDetailFolderRelDTO = new IssueComponentDetailFolderRelDTO(resultRelDTO.getObjectVersionNumber(), map.get(resultRelDTO.getIssueId()));
-                //                if (resultRelDTO.getIssueId().equals(issueComponentDetailDTO.getIssueId())) {
-                //                    IssueComponentDetailFolderRelDTO issueComponentDetailFolderRelDTO = new IssueComponentDetailFolderRelDTO(resultRelDTO.getObjectVersionNumber(), issueComponentDetailDTO);
-                issueComponentDetailFolderRelDTO.setObjectVersionNumber(resultRelDTO.getObjectVersionNumber());
-                issueComponentDetailFolderRelDTOS.add(issueComponentDetailFolderRelDTO);
+        //查找所有的阶段的所有case，装配进CaseDTOS中
+        for (TestCycleCaseDTO testCycleCaseDTO : testCycleCaseDTOS) {
+            if (highPage > lowPage) {
+                //取出剩余size的数据
+                pageRequest.setSize(highPage-lowPage);
+                Page<TestCycleCaseE> serviceEPage = iTestCycleCaseService.query(ConvertHelper.convert(testCycleCaseDTO, TestCycleCaseE.class), pageRequest);
+                //一个阶段下的所有case
+                Page<TestCycleCaseDTO> dtos = ConvertPageHelper.convertPage(serviceEPage, TestCycleCaseDTO.class);
+                total += dtos.getTotalElements();
+                allDTOS.addAll(dtos.getContent());
+                //变更顶点
+                highPage -= dtos.getTotalElements();
             }
         }
-        Page page = new Page();
-        page.setContent(issueComponentDetailFolderRelDTOS);
-        return page;
+
+        //分页操作
+        PageInfo info = new PageInfo(pageRequest.getPage(), pageRequest.getSize());
+        Page<TestCycleCaseDTO> pageDTOS = new Page<>(allDTOS, info, total);
+//        CustomPage<TestCycleCaseDTO> customPage = new CustomPage<>(allDTOS,allDTOS.stream().map(TestCycleCaseDTO::getCycleId).toArray(Long[]::new));
+//        customPage.setTotalElements(total);
+
+        populateCycleCaseWithDefect(pageDTOS, projectId);
+
+        populateUsers(pageDTOS);
+
+        return pageDTOS;
     }
 
 
-    
+
+
+
+
+
+
+
+    <where>
+            <if test="dto!=null and dto.issueId != null">
+                issue_id in
+                <foreach item="dto" index="index" collection="dtos"
+                         open="(" separator="," close=")">
+                    #{dto.issueId}
+                </foreach>
+            </if>
+            <if test="dto!=null and dto.cycleId != null">
+                AND cycle_id in
+                <foreach item="dto" index="index" collection="dtos"
+                         open="(" separator="," close=")">
+                    #{dto.cycleId}
+                </foreach>
+            </if>
+            <if test="dto!=null and dto.executeId != null">
+                AND execute_id in
+                <foreach item="dto" index="index" collection="dtos"
+                         open="(" separator="," close=")">
+                    #{dto.executeId}
+                </foreach>
+            </if>
+            <if test="dto!=null and dto.executionStatus != null">
+                AND execution_status in
+                <foreach item="dto" index="index" collection="dtos"
+                         open="(" separator="," close=")">
+                    #{dto.executionStatus}
+                </foreach>
+            </if>
+            <if test="dto!=null and dto.comment != null">
+                AND comment like
+                <foreach item="dto" index="index" collection="dtos"
+                         open="(" separator="," close=")">
+                    CONCAT(CONCAT('%', #{dto.comment}), '%')
+                </foreach>
+            </if>
+            <if test="dto!=null and dto.assignedTo != null">
+                AND assigned_to in
+                <foreach item="dto" index="index" collection="dtos"
+                         open="(" separator="," close=")">
+                    #{dto.assignedTo}
+                </foreach>
+            </if>
+            <if test="dto!=null and dto.lastUpdatedBy != null">
+                AND last_updated_by in
+                <foreach item="dto" index="index" collection="dtos"
+                         open="(" separator="," close=")">
+                    #{dto.lastUpdatedBy}
+                </foreach>
+            </if>
+            <!--<if test="dto!=null and dto.lastUpdateDate != null">-->
+                <!--AND last_update_date <![CDATA[>=]]> #{dto.lastUpdateDate}-->
+                <!--last_update_date in-->
+                <!--<foreach item="dto" index="index" collection="dtos"-->
+                         <!--open="(" separator="," close=")">-->
+                    <!--#{dto.executeId}-->
+                <!--</foreach>-->
+            <!--</if>-->
+        </where>
+
+
+
+
+                <where>
+            <foreach item="dto" index="index" collection="dtos"
+                     open="(" separator="," close=")">
+                <if test="dto!=null and dto.issueId != null">
+                    AND issue_id = #{dto.issueId}
+                </if>
+                <if test="dto!=null and dto.cycleId != null">
+                    AND cycle_id = #{dto.cycleId}
+                </if>
+                <if test="dto!=null and dto.executeId != null">
+                    AND execute_id = #{dto.executeId}
+                </if>
+                <if test="dto!=null and dto.executionStatus != null">
+                    AND execution_status = #{dto.executionStatus}
+                </if>
+                <if test="dto!=null and dto.comment != null">
+                    AND comment like CONCAT(CONCAT('%', #{dto.comment}), '%')
+                </if>
+                <if test="dto!=null and dto.assignedTo != null">
+                    AND assigned_to = #{dto.assignedTo}
+                </if>
+                <if test="dto!=null and dto.lastUpdatedBy != null">
+                    AND last_updated_by = #{dto.lastUpdatedBy}
+                </if>
+                <if test="dto!=null and dto.lastUpdateDate != null">
+                    AND last_update_date <![CDATA[>=]]> #{dto.lastUpdateDate}
+                </if>
+            </foreach>
+        </where>
