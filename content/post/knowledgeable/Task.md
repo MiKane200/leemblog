@@ -351,3 +351,86 @@ $ git config --global user.email johndoe@example.com
                 </if>
             </foreach>
         </where>
+
+
+            <select id="queryWithAttachAndDefect_oracle" resultMap="BaseResultMap">
+        SELECT
+        cycle.execute_id,
+        cycle.cycle_id,
+        cycle.issue_id,
+        cycle.rank,
+        cycle.object_version_number,
+        cycle.execution_status,
+        cycle.assigned_to,
+        cycle.description,
+        attach.url,
+        attach.attachment_name,
+        attach.id,
+        cycle.last_update_date,
+        cycle.last_updated_by,
+        defect.defect_type,
+        defect.id defece_id,
+        defect.defect_link_id,
+        defect.issue_id defect_issue_id
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        tt.*, ROWNUM AS rowno
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        test_cycle_case
+        <where>
+            <if test="dto!=null and dto.issueId != null">
+                AND issue_id = #{dto.issueId}
+            </if>
+            <if test="dto!=null and dto.cycleId != null">
+                AND cycle_id = #{dto.cycleId}
+            </if>
+            <if test="dto!=null and dto.executeId != null">
+                AND execute_id = #{dto.executeId}
+            </if>
+            <if test="dto!=null and dto.executionStatus != null">
+                AND execution_status = #{dto.executionStatus}
+            </if>
+            <if test="dto!=null and dto.comment != null">
+                AND description like CONCAT(CONCAT('%', #{dto.comment}), '%')
+            </if>
+            <if test="dto!=null and dto.assignedTo != null">
+                AND assigned_to = #{dto.assignedTo}
+            </if>
+            <if test="dto!=null and dto.lastUpdatedBy != null">
+                AND last_updated_by = #{dto.lastUpdatedBy}
+            </if>
+            <if test="dto!=null and dto.lastUpdateDate != null">
+                AND last_update_date <![CDATA[>=]]> #{dto.lastUpdateDate}
+            </if>
+        </where>
+        ORDER BY
+        RANK
+        ) tt
+        <if test="pageSize !=0">
+        WHERE
+            <![CDATA[ROWNUM <= #{pageSize}]]>
+        </if>
+        ) table_alias
+        <if test="pageSize !=0">
+        WHERE
+            <![CDATA[ table_alias.rowno >= #{page}]]>
+        </if>
+        ) cycle
+        LEFT JOIN test_cycle_case_attach_rel attach ON cycle.execute_id = attach.attachment_link_id
+        AND attach.attachment_type = 'CYCLE_CASE'
+        LEFT JOIN test_cycle_case_defect_rel defect ON cycle.execute_id = defect.defect_link_id
+        AND defect.defect_type = 'CYCLE_CASE'
+    </select>
+
+    List<TestIssueFolderDTO> folderDTOS = testIssueFolderService.queryByParameterWithPageUnderProject(projectId, new PageRequest(0, 99999, new Sort(Sort.Direction.DESC, "versionId")));
+
+    中断异常
