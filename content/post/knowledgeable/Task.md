@@ -255,3 +255,185 @@ $ git config --global user.email johndoe@example.com
 
 接下来看的额外要点：
 1. IO框架及其里面要使用的一些常用的方法
+
+
+
+
+
+
+1. 在当前分支开发完了之后，去主分支git pull --rebase
+2. 切回当前开发分支，push
+
+
+
+
+参与测试管理微服务功能模块的设计、开发与变更
+经历Choerodon 0.7.0-0.11.0的版本迭代，熟悉了微服务的设计、开发、发布、管理流程
+Developed new filing and organizational practices, saving the company $3,000 per year in contracted labor expenses
+Maintain utmost discretion when dealing with sensitive topics
+Manage travel and expense reports for department team members 
+
+
+    @Permission(level = ResourceLevel.PROJECT, roles = {InitRoleCode.PROJECT_MEMBER, InitRoleCode.PROJECT_OWNER})
+    @ApiOperation("删除文件夹下的issue")
+    @PutMapping("/delete")
+    public ResponseEntity delete(@PathVariable(name = "project_id") Long projectId,
+                                 @RequestBody List<Long> issuesId) {
+        testIssueFolderRelService.delete(projectId,issuesId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+            List<IssueInfosDTO> issueInfosDTOS = new ArrayList<>();
+            for (TestIssueFolderRelDTO relTestIssueFolderRelDTO : resTestIssueFolderRelDTOS) {
+                IssueInfosDTO issueInfosDTO = new IssueInfosDTO();
+                issueInfosDTO.setIssueId(relTestIssueFolderRelDTO.getIssueId());
+                issueInfosDTOS.add(issueInfosDTO);
+            }
+
+
+14855
+1. prorityCode(为priority-null)
+2. 删除issue时，过多会造成错误
+
+
+ssh -oPort=6000 vivianus@ettwz.japaneast.cloudapp.azure.com
+
+-e "MINIO_ACCESS_KEY=ceshiguanli" \
+  -e "MINIO_SECRET_KEY=ceshiguanli" \
+  -v G:\data:/data \
+  -v G:\minio\config:/root/.minio \
+
+  docker run -d -p 9000:9000 --name=minio -e "MINIO_ACCESS_KEY=ceshiguanli" -e "MINIO_SECRET_KEY=ceshiguanli" -v G:\data:/data -v G:\minio\config:/root/.minio registry.saas.hand-china.com/tools/minio:latest server /minioData
+
+  docker run -d -p 9000:9000 --name minio -e "MINIO_ACCESS_KEY=ceshiguanli" -e "MINIO_SECRET_KEY=ceshiguanli" -v G:\data:/data -v G:\minio\config:/root/.minio registry.saas.hand-china.com/tools/minio:latest server /data
+
+
+
+  工作：
+## 0.10.0
+1. 缺陷表功能重构
+2. 增添folder，folderRel
+3. cycle功能
+4. 初步接触spock测试
+5. 迭代数据修复
+6. 修改更新后文档
+
+## 0.11.0
+1. issue的Excel导出
+2. 
+
+
+
+test_env_command
+
+id                  bigint(20)
+value_id            bigint(20)
+command_type        varchar(32) -- create/restart
+ovn
+cb
+cd
+lub
+lud
+
+
+
+test_env_command_value
+
+id                  bigint(20)
+value               text
+
+
+
+test_app_instance
+
+id                  bigint(20)
+code                varchar(64)
+app_id              bigint(20)
+app_version_id      bigint(20)
+project_version_id  bigint(20)
+env_id              bigint(20)
+command_id          bigint(20)
+project_id          bigint(20)
+pod_status   0 待处理 / 1 处理中 / 2 已完成 / 3 失败
+log_id
+ovn
+cb
+cd
+lub
+lud
+
+索引：
+1. app_id与env_id联合索引
+2. code与env_id联合索引
+3. log_id
+
+
+test_app_instance_log
+
+id
+log
+
+test_automation_history
+
+id
+framework
+test_status  0 未执行 / 1 全部成功 / 2 部分成功
+instance_id
+project_id
+cycle_id
+result_id
+ovn
+cb
+cd
+lub
+lud
+
+
+
+test_automation_result
+
+
+id
+result
+
+包含缺陷表的功能重构，
+文件夹及其issue关联关系，
+测试循环相关功能调整，
+编写spock单测，
+旧数据迭代修复，
+测试用例的Excel导出，
+版本升级的文档更新，
+自动化测试部署。
+
+{"deploy":"{\"isNotChange\":true,\"appId\":662,\"code\":\"test-mocha\",\"appVerisonId\":582,\"environmentId\":16,\"projectVersionId\":233,\"values\":\"# Default values for api-gateway.\\r\\n# This is a YAML-formatted file.\\r\\n# Declare variables to be passed into your templates.\\r\\n\\r\\nreplicaCount: 1\\r\\n\\r\\nimage:\\r\\n  repository: registry.saas.hand-china.com/operation-test-manager/test-mocha\\n  pullPolicy: Always\\r\\n\\r\\nframework: mocha\\r\\n\\r\\nenv:\\r\\n  open:\\r\\n    APIGATEWAY: http://api.staging.saas.hand-china.com\\r\\n    PROJECTID: 144\\r\\n    USERNAME: 16965\\r\\n    PASSWORD: Smartisan0000\\r\\n    RESULTGATEWAY: http://api.staging.saas.hand-china.com\\r\\n    RESULTPATH: mochawesome-report\\r\\n    RESULTNAME: mochawesome\\r\\n    SLOW: 250\\r\\n    TIMEOUT: 15000\\r\\n\\r\\njob:\\r\\n  activeDeadlineSeconds: 1200\\r\\n\\r\\nresources:\\r\\n  # We usually recommend not to specify default resources and to leave this as a conscious\\r\\n  # choice for the user. This also increases chances chart run on environments with little\\r\\n  # resources,such as Minikube. If you do want to specify resources,uncomment the following\\r\\n  # lines,adjust them as necessary,and remove the curly braces after 'resources:'.\\r\\n  limits:\\r\\n    # cpu: 100m\\r\\n    # memory: 2Gi\\r\\n  requests:\\r\\n    # cpu: 100m\\r\\n    # memory: 1Gi\\r\\n\\n\",\"type\":\"update\"}","projectId":144,"projectName":"测试管理开发项目","projectCode":"test-manager"}
+
+
+
+
+
+
+
+
+
+
+第一张：
+名称：西南石油大学
+纳税人识别号：12510000452189430X
+地址、电话：四川省成都市新都区新都大道8号028-8303235
+开户行及账号：中国农业银行新都支行 22824101040014888
+费用类型：电子产品
+商品名：Intel/英特尔固态SSD硬盘 型号：760P 256G 单位：个 单价：450元，数量：3 金额：1350元 人民币
+
+第二张：
+公司名称:成都盛特石油装备模拟技术股份有限公司
+统一社会信用代码:915101006909437423
+地址:成都高新区肖家河中街46号
+开户行及账号:中国工商银行股份有限公司成都高新技术产业开发区支行 4402233009100058448
+费用类型：电子产品
+商品名：金士顿DDR3内存条 型号：KVR16N11/8-SP ，单位：条 ，单价：399元， 数量：3 ，金额：1197元 人民币
+
+
+
+收件地址：四川省成都市新都区新都大道8号
+联系人，号码：朱倍仪:15283399363
