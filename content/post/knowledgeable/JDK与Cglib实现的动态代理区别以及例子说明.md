@@ -3,9 +3,7 @@ Async强制覆盖了aop的order为Integer.MIN_VALUE（spring认为Async应该是
 
 (如果是相反的情况，事务切面先于Async切面执行，由于spring事务管理重度依赖ThreadLocal，所以异步线程里面感知不到事务，导致Async注解和Transactional注解同时使用时，Transactional注解会失效。具体原因是：在Spring开启事务之后，设置Connection到当前线程，然后立马开启一个新线程，mybatis执行实际的SQL代码时，通过ThreadLocal获取不到Connection，开启新的Connection，也不会设置autoCommit，那么这个函数整体将没有事务。)
 
-2. JDK中使用 实现了InvocationHandler接口的方式来进行动态代理，而cglib则使用 实现了 MethodInterceptor 接口的方式来进行动态代理。
-
-        但是，JDK的动态代理依靠接口实现，如果有些类并没有实现接口，则不能使用JDK代理， 这就要使用cglib动态代理了。cglib是针对类来实现代理的，他的原理是对指定的目标类生成一个子类， 并覆盖其中方法实现增强，但因为采用的是继承，所以不能对final修饰的类进行代理。因此，总的来说，用cglib会更好点。
+2. JDK中使用 实现了InvocationHandler接口的方式来进行动态代理，而cglib则使用 实现了 MethodInterceptor 接口的方式来进行动态代理。但是，JDK的动态代理依靠接口实现，如果有些类并没有实现接口，则不能使用JDK代理， 这就要使用cglib动态代理了。cglib是针对类来实现代理的，他的原理是对指定的目标类生成一个子类， 并覆盖其中方法实现增强，但因为采用的是继承，所以不能对final修饰的类进行代理。因此，总的来说，用cglib会更好点。
 
 spring源码 判断使用jdk还是cglib代理：
     public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
@@ -34,7 +32,12 @@ import java.lang.reflect.Proxy;
  
 /**
  * JDK动态代理代理类
- *
+ *1. 获取 RealSubject上的所有接口列表； 
+ *2. 确定要生成的代理类的类名； 
+ *3. 根据需要实现的接口信息，在代码中动态创建该Proxy类的字节码； 
+ *4. 将对应的字节码转换为对应的class 对象； 
+ *5. 创建InvocationHandler 实例handler，用来处理Proxy所有方法调用； 
+ *6. Proxy 的class对象 以创建的handler对象为参数，实例化一个proxy对象
  */ 
 public class BusiProxy implements InvocationHandler{
  
@@ -45,7 +48,7 @@ public class BusiProxy implements InvocationHandler{
      * @param target 
      * @return 
      */  
-    public Object bind(Object target) {  
+    public Object bind(Object target) {
         this.target = target;  
         //取得代理对象  
         return Proxy.newProxyInstance(target.getClass().getClassLoader(),  

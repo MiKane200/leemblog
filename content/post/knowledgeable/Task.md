@@ -437,3 +437,22 @@ result
 
 收件地址：四川省成都市新都区新都大道8号
 联系人，号码：朱倍仪:15283399363
+
+用户瞎几把输入比如：XVVVVVIIIIIIII的情况考虑！
+
+1. 字码输入 M D C L X V I  将写入的字符串获取为char[]
+2. 设计一个类S，使用linkHashMap A，用于装载原罗马字符（如key:M=>value:1000,key:D=>value100），设置一个HashMap B用于对罗马数字出现频率计数，设置一个熟悉size表示打印出来的字符串的 规格大小
+3. 处理char数组，从第一位开始读取，将读取到的值作为key，从A中获取值
+    1. 如果读取的key不包含在A中，则提示错误，打印E，退出程序
+    2. 如果读取的key有值，是M在B中M key处加1，是D在B···加1,···等
+    3. 有值的话，将该处之前的罗马字符删除掉，比如 V 则，删除掉MDCLX
+4. 使用二维数组arr[][],遍历S的B中标志位
+    1. 0不输出
+    2. >0判断具体数字输出 设置值进去
+
+
+
+    Error:Groovyc: While compiling tests of zongweiliwork: Could not instantiate global transform class org.spockframework.compiler.SpockTransform specified at jar:file:/C:/Users/minute5/.m2/repository/org/spockframework/spock-core/1.2-groovy-2.5/spock-core-1.2-groovy-2.5.jar!/META-INF/services/org.codehaus.groovy.transform.ASTTransformation  because of exception java.lang.NullPointerException
+
+
+    ICVXIM
