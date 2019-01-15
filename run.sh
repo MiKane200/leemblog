@@ -1,1 +1,0 @@
-docker run --name=leemblog -d -p 1313:1313 leemblog:1.0.0
