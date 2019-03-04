@@ -1,0 +1,14 @@
+## 先谈谈实际开发中自己的理解
+1. 从理解难易程度上来说，hibernate相对理解起来要比mybatis困难。
+2. 灵活程度与性能，使用mybatis就必须使用自己定义的sql，能够不依赖于代码（使用xml），降低了耦合。如果是hibernate，相当于嵌入代码，想改sql就必须修改代码。而且Hibernate的查询会将表中的所有字段查询出来，会有性能消耗。Hibernate也可以自己写SQL来指定需要查询的字段，但这样就破坏了Hibernate开发的简洁性。而Mybatis的SQL是手动编写的，所以可以按需求指定查询的字段。
+3. 从开发工作量来说，hibernate让开发人员专注于业务，而不用去管具体的sql处理与结果映射，但这样相应地就降低了灵活度。mybatis则不会，当需要手动地去建立映射和写sql。
+4. 日志方面的话，hibernate带有自己的日志统计系统，而mybatis则是依赖于Log4j。
+5. Hibernate 是完整的对象/关系映射解决方案（ORM），它提供了对象状态管理的功能，也就是说，相对于常见的 JDBC/SQL 持久层方案中需要管理 SQL 语句，Hibernate采用了更自然的面向对象的视角来持久化 Java 应用中的数据。mybatis是自己来对相应对象进行管理，通过mapper对象映射来进行管理。
+6. 数据库的移植方面，mybatis没有hibernete支持得好，我之前用mybatis来同时支持mysql和oracle的时候，需要在java代码中去判断当前使用的是什么数据库，再去调用不同的方法，而且在xml中也需要两套sql语句(因为有些存在数据库方言问题)。而hibernate能在它的配置文件里面可以选择数据库方言。
+7. commonMapper，实现了平常的一些增删查改方面的基础操作。
+
+## 概念上的
+
+#### 缓存方面
+1. Hibernate一级缓存是Session缓存，利用好一级缓存就需要对Session的生命周期进行管理好。建议在一个Action操作中使用一个Session。一级缓存需要对Session进行严格管理。
+2. Hibernate二级缓存是SessionFactory级的缓存。 SessionFactory的缓存分为内置缓存和外置缓存。内置缓存中存放的是SessionFactory对象的一些集合属性包含的数据(映射元素据及预定SQL语句等),对于应用程序来说,它是只读的。外置缓存中存放的是数据库数据的副本,其作用和一级缓存类似.二级缓存除了以内存作为存储介质外,还可以选用硬盘等外部存储设备。二级缓存称为进程级缓存或SessionFactory级缓存，它可以被所有session共享，它的生命周期伴随着SessionFactory的生命周期存在和消亡。
