@@ -21,7 +21,7 @@
 3. 如果我们想把前面写入的数据读出来，需要调用flip方法，将position设置为0，limit设置为以前的position那里。
 4. 如果还想从头再读一遍，可以调用rewind，让limit不变，position再次设置为0。
 
-## 如果我们需要在channel读取的过程中，将不同片段写入到相应的Buffer里面（类似二进制消息分拆成消息头、消息体等），可以采用NIO的什么机制做到呢？
+## 如果我们需要在channel读取的过程中，将不同片段写入到相应的Buffer里面（类似二进制消息分拆成消息头、消息体等），可以采用NIO 的什么机制做到呢？
 可以利用NIO分散-scatter机制来写入不同buffer。
 Code:
 ByteBuffer header = ByteBuffer.allocate(128);

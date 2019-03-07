@@ -11,5 +11,3 @@
     5. authcBasic： 例如/admins/user/**=authcBasic没有参数.表示httpBasic认证
     6. ssl: 例子/admins/user/**=ssl没有参数，表示安全的url请求，协议为https
     7. user: 例如/admins/user/**=user没有参数表示必须存在用户，当登入操作时不做检查
-
-## 

@@ -4,7 +4,7 @@
 从年代的角度，通常将其老年代实现单独称作Serial Old，它采用了标记-整理（Mark-Compact）算法，区别于新生代的复制算法。
 Serial GC的对应JVM参数是：
 -XX:+UseSerialGC
-
+ 
 #### ParNew GC
 很明显是个新生代GC实现，它实际是Serial GC的多线程版本，最常见的应用场景是配合老年代的CMS GC工作，下面是对应参数
 -XX:+UseConcMarkSweepGC -XX:+UseParNewGC
