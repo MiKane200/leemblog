@@ -222,6 +222,7 @@ func main(){
 }
 ```
 
+
 #### go语言的闭包
 ```go
 package main
