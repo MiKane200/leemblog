@@ -1,11 +1,20 @@
 ## 回答
-1. int是我们常说的整形数字，是Java的8个原始数据类型（Primitive Types，boolean、byte 、short、char、int、float、double、long）之一。Java语言虽然号称一切都是对象，但原始数据类型是例外。
+1. int是我们常说的整形数字，是Java的8个原始数据类型（boolean、byte 、short、char、int、float、double、long）之一。Java语言虽然号称一切都是对象，但原始数据类型是例外。
 2. Integer是int对应的包装类，它有一个int类型的字段存储数据，并且提供了基本操作，比如数学运算、int和字符串之间转换等。在Java 5中，引入了自动装箱和自动拆箱功能（boxing/unboxing），Java可以根据上下文，自动进行转换，极大地简化了相关编程。
 3. 关于Integer的值缓存，这涉及Java 5中另一个改进。构建Integer对象的传统方式是直接调用构造器，直接new一个对象。但是根据实践，我们发现大部分数据操作都是集中在有限的、较小的数值范围，因而，在Java 5中新增了静态工厂方法valueOf，在调用它的时候会利用一个缓存机制，带来了明显的性能改进。按照Javadoc，这个值默认缓存是-128到127之间。
 - Boolean，缓存了true/false对应实例，确切说，只会返回两个常量实例Boolean.TRUE/FALSE。
 - Short，同样是缓存了-128到127之间的数值。
 - Byte，数值有限，所以全部都被缓存。
 - Character，缓存范围'\u0000' 到 '\u007F'。
+
+Boolean：(全部缓存)
+Byte：(全部缓存)
+Character(<= 127缓存)
+Short(-128 — 127缓存)
+Long(-128 — 127缓存)
+Integer(-128 — 127缓存)
+Float(没有缓存)
+Doulbe(没有缓存)
 
 ## 引申问题
 编译阶段、运行时，自动装箱/自动拆箱是发生在什么阶段？

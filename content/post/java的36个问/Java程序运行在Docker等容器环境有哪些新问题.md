@@ -1,5 +1,5 @@
 ## Docker并不是一种完全的虚拟化技术，而更是一种轻量级的隔离技术
-[img](../../../static/img/Docker与虚拟机区别.png)
+[img](../../../static/img/Docker与虚拟机区别.png) 
 1. 从技术角度，基于namespace，Docker为每个容器提供了单独的命名空间，对网络、PID、用户、IPC通信、文件系统挂载点等实现了隔离。对于CPU、内存、磁盘IO等计算资源，则是通过CGroup进行管理。
 
 ## 从JVM运行机制的角度，为什么这些“沟通障碍”会导致OOM等问题呢？

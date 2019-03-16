@@ -4,7 +4,7 @@ Async强制覆盖了aop的order为Integer.MIN_VALUE（spring认为Async应该是
 (如果是相反的情况，事务切面先于Async切面执行，由于spring事务管理重度依赖ThreadLocal，所以异步线程里面感知不到事务，导致Async注解和Transactional注解同时使用时，Transactional注解会失效。具体原因是：在Spring开启事务之后，设置Connection到当前线程，然后立马开启一个新线程，mybatis执行实际的SQL代码时，通过ThreadLocal获取不到Connection，开启新的Connection，也不会设置autoCommit，那么这个函数整体将没有事务。)
 
 2. JDK中使用 实现了InvocationHandler接口的方式来进行动态代理，而cglib则使用 实现了 MethodInterceptor 接口的方式来进行动态代理。但是，JDK的动态代理依靠接口实现，如果有些类并没有实现接口，则不能使用JDK代理， 这就要使用cglib动态代理了。cglib是针对类来实现代理的，他的原理是对指定的目标类生成一个子类， 并覆盖其中方法实现增强，但因为采用的是继承，所以不能对final修饰的类进行代理。因此，总的来说，用cglib会更好点。
-
+```java
 spring源码 判断使用jdk还是cglib代理：
     public AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException {
         if (!config.isOptimize() && !config.isProxyTargetClass() && !this.hasNoUserSuppliedProxyInterfaces(config)) {
@@ -18,11 +18,11 @@ spring源码 判断使用jdk还是cglib代理：
             }
         }
     }
+```
+ config.isOptimize()config.isProxyTargetClass()默认返回都是false，所以在默认情况下目标对象有没有实现接口决定着Spring采取的策略，当然可以设置config.isOptimize()或者config.isProxyTargetClass()返回为true，这样无论目标对象有没有实现接口Spring都会选择使用CGLIB代理。
 
 
-    config.isOptimize()config.isProxyTargetClass()默认返回都是false，所以在默认情况下目标对象有没有实现接口决定着Spring采取的策略，当然可以设置config.isOptimize()或者config.isProxyTargetClass()返回为true，这样无论目标对象有没有实现接口Spring都会选择使用CGLIB代理。
-
-
+1. jdk动态代理实现
 ```java
 package com.ffcs.icity.proxy.jdk;
  
@@ -41,7 +41,7 @@ import java.lang.reflect.Proxy;
  */ 
 public class BusiProxy implements InvocationHandler{
  
-	private Object target;  
+	private Object target;
 	
     /** 
      * 绑定委托对象并返回一个代理类 
